@@ -28,8 +28,8 @@ from pokemongo_bot.socketio_server.runner import SocketIoRunner
 from pokemongo_bot.websocket_remote_control import WebsocketRemoteControl
 from worker_result import WorkerResult
 from tree_config_builder import ConfigException, MismatchTaskApiVersion, TreeConfigBuilder
-
-
+from sys import platform as _platform
+import struct
 class PokemonGoBot(object):
     @property
     def position(self):
@@ -603,7 +603,25 @@ class PokemonGoBot(object):
 
         self._print_character_info()
 
-        self.api.activate_signature("encrypt.so")
+
+
+        print os.path.dirname(__file__)
+
+
+        if _platform == "linux" or _platform == "linux2":
+            file_name = 'encrypt.so'
+        elif _platform == "darwin":
+            file_name = 'encrypt.so'
+        elif _platform == "win32":
+            # Check if we are on 32 or 64 bit
+            if(  8 * struct.calcsize("P") == 32):
+                file_name = 'encrypt.dll'
+            else:
+                file_name = 'encrypt_64.dll'
+
+
+        path = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+        self.api.activate_signature(path + '/'+ file_name)
         self.logger.info('')
         self.update_inventory()
         # send empty map_cells and then our position
