@@ -1,0 +1,183 @@
+{
+    "auth_service": "ptc",
+    "location": "40.76976805976344,-73.979771733284",
+    "gmapkey": "AIzaSyB9WyumAiW2xExBFhy18fuY3FtqCBc7VVQ",
+    "libencrypt_location": "",
+    "tasks": [
+    {
+      "type": "HandleSoftBan"
+    },
+    {
+      "type": "CollectLevelUpReward"
+    },
+    {
+      "type": "IncubateEggs",
+      "config": {
+        "longer_eggs_first": true
+      }
+    },
+    {
+      "type": "TransferPokemon"
+    },
+    {
+      "type": "EvolvePokemon",
+      "config": {
+        "evolve_all": "none",
+        "first_evolve_by": "cp",
+        "evolve_above_cp": 500,
+        "evolve_above_iv": 0.8,
+        "logic": "or",
+        "evolve_speed": 10,
+        "use_lucky_egg": false
+      }
+    },
+    {
+      "type": "RecycleItems",
+      "config": {
+        "item_filter": {
+            "Pokeball":       { "keep" : 50 },
+            "Greatball":      { "keep" : 75 },
+            "Potion":         { "keep" : 0 },
+            "Super Potion":   { "keep" : 0 },
+            "Hyper Potion":   { "keep" : 25 },
+            "Revive":         { "keep" : 25 },
+            "Razz Berry":     { "keep" : 50 }
+        }
+      }
+    },
+    {
+      "type": "CatchVisiblePokemon"
+    },
+    {
+      "type": "CatchLuredPokemon"
+    },
+    {
+      "type": "SpinFort"
+    },
+    {
+      "type": "MoveToMapPokemon",
+      "config": {
+        "address": "http://pokemap.chypriote.me/",
+        "max_distance": 500,
+        "min_time": 60,
+        "min_ball": 5,
+        "prioritize_vips": true,
+        "snipe": true,
+        "snipe_high_prio_only": true,
+        "snipe_high_prio_threshold": 500,
+        "update_map": false,
+        "mode": "priority",
+        "map_path": "raw_data",
+        "catch": {
+          "==========Legendaries==========": 0,
+          "Aerodactyl": 1000,
+          "Snorlax": 1000,
+          "Articuno": 1000,
+          "Zapdos": 1000,
+          "Moltres": 1000,
+          "Dratini": 800,
+          "Dragonair": 1000,
+          "Dragonite": 1000,
+          "Mewtwo": 1000,
+          "Mew": 1000,
+          "==========Region Locked==========": 0,
+          "Farfetch'd": 1000,
+          "Kangaskhan": 1000,
+          "Mr. Mime": 1000,
+          "Tauros": 1000,
+          "==========Very Rare==========": 0,
+          "Lapras": 900,
+          "Electabuzz": 900,
+          "Magmar": 900,
+          "Ditto": 900,
+          "Porygon": 200,
+          "==========Sniper==========": 0,
+          "Venusaur": 700,
+          "Charizard": 700,
+          "Blastoise": 700,
+          "Raichu": 500,
+          "Sandslash": 1000,
+          "Nidoqueen": 500,
+          "Nidoking": 500,
+          "Ninetales": 700,
+          "Arcanine": 700,
+          "Alakazam": 800,
+          "Machamp": 800,
+          "Victreebel": 800,
+          "Tentacruel": 400,
+          "Golem": 800,
+          "Rapidash": 300,
+          "Slowbro": 600,
+          "Haunter": 200,
+          "Gengar": 1000,
+          "Exeggcutor": 200,
+          "Marowak": 500,
+          "Hitmonlee": 400,
+          "Hitmonchan": 400,
+          "Lickitung": 400,
+          "Rhydon": 1000,
+          "Chansey": 700,
+          "Seadra": 400,
+          "Scyther": 600,
+          "Pinsir": 500,
+          "Gyarados": 800,
+          "Eevee": 100,
+          "Vaporeon": 700,
+          "Jolteon": 800,
+          "Flareon": 500,
+          "Omastar": 900,
+          "Kabutops": 900
+        }
+      }
+    },
+    {
+      "type": "MoveToFort",
+      "config": {
+        "lure_attraction": false,
+        "lure_max_distance": 2000
+      }
+    },
+    {
+      "type": "FollowSpiral"
+    }
+  ],
+  "map_object_cache_time": 5,
+  "forts": {
+    "avoid_circles": true,
+    "max_circle_size": 50
+  },
+  "websocket_server": false,
+  "walk": 8,
+  "action_wait_min": 1,
+  "action_wait_max": 4,
+  "debug": false,
+  "test": false,
+  "health_record": false,
+  "location_cache": true,
+  "distance_unit": "km",
+  "reconnecting_timeout": 10,
+  "evolve_captured": "NONE",
+  "catch_randomize_reticle_factor": 1.0,
+  "catch_randomize_spin_factor": 1.0,
+  "logging_color": true,
+  "catch": {
+    "any": {"catch_above_cp": 0, "catch_above_iv": 0, "logic": "or" }
+  },
+  "release": {
+    "any": {"release_below_cp": 900, "release_below_iv": 0.8, "keep_best_cp":1, "keep_best_iv":1, "logic": "and"},
+    "Dragonite": {"never_release": true},
+    "Snorlax": {"never_release": true},
+    "Vaporeon": {"never_release": true}
+  },
+  "vips" : {
+    "any": {"catch_above_cp": 1200, "catch_above_iv": 0.9, "logic": "or" },
+    "Lapras": {},
+    "Moltres": {},
+    "Zapdos": {},
+    "Articuno": {},
+    "Mewtwo": {},
+    "Dragonite": {},
+    "Snorlax": {},
+    "Mew": {}
+  }
+}
