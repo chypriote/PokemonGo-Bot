@@ -1,0 +1,155 @@
+{
+    "auth_service": "google",
+    "location": "48.8947894,2.3905793",
+    "gmapkey": "AIzaSyB9WyumAiW2xExBFhy18fuY3FtqCBc7VVQ",
+    "tasks": [
+    {
+      "type": "HandleSoftBan"
+    },
+    {
+      "type": "CollectLevelUpReward"
+    },
+    {
+      "type": "IncubateEggs",
+      "config": {
+        "longer_eggs_first": true
+      }
+    },
+    {
+      "type": "TransferPokemon"
+    },
+    {
+      "type": "EvolvePokemon",
+      "config": {
+        "evolve_all": "none",
+        "first_evolve_by": "cp",
+        "evolve_cp_min": 400,
+        "evolve_speed": 10,
+        "use_lucky_egg": false
+      }
+    },
+    {
+      "type": "RecycleItems",
+      "config": {
+        "item_filter": {
+            "Pokeball":       { "keep" : 10 },
+            "Greatball":      { "keep" : 10 },
+            "UltraBall":      { "keep" : 80 },
+            "Potion":         { "keep" : 0 },
+            "Super Potion":   { "keep" : 0 },
+            "Hyper Potion":   { "keep" : 0 },
+            "Max Potion":     {"keep" : 25 },
+            "Revive":         { "keep" : 25 },
+            "Max Revive":         { "keep" : 25 },
+            "Razz Berry":     { "keep" : 50 }
+        }
+      }
+    },
+    {
+      "type": "CatchVisiblePokemon"
+    },
+    {
+      "type": "CatchLuredPokemon"
+    },
+    {
+      "type": "SpinFort"
+    },
+    {
+      "type": "MoveToMapPokemon",
+      "config": {
+        "address": "http://pokemap.chypriote.me/",
+        "max_distance": 500,
+        "min_time": 60,
+        "min_ball": 50,
+        "prioritize_vips": true,
+        "snipe": true,
+        "snipe_high_prio_only": true,
+        "snipe_high_prio_threshold": 400,
+        "update_map": true,
+        "mode": "priority",
+        "map_path": "raw_data",
+        "catch": {
+          "Moltres": 1000,
+          "Zapdos": 1000,
+          "Articuno": 1000,
+          "Mewtwo": 1000,
+          "Lapras": 1000,
+          "Dragonite": 1000,
+          "Snorlax": 1000,
+          "Mew": 1000,
+          "Butterfree": 1000,
+          "Beedrill": 1000,
+          "Dewgong": 1000,
+          "Muk": 1000
+        }
+      }
+    },
+    {
+      "type": "MoveToFort",
+      "config": {
+        "lure_attraction": true,
+        "lure_max_distance": 2000
+      }
+    }
+  ],
+  "map_object_cache_time": 5,
+  "forts": {
+    "avoid_circles": true,
+    "max_circle_size": 50
+  },
+  "websocket_server": false,
+  "walk": 8,
+  "action_wait_min": 1,
+  "action_wait_max": 4,
+  "debug": false,
+  "test": false,
+  "health_record": false,
+  "location_cache": true,
+  "distance_unit": "km",
+  "reconnecting_timeout": 10,
+  "evolve_captured": "NONE",
+  "catch_randomize_reticle_factor": 1.0,
+  "catch_randomize_spin_factor": 1.0,
+  "catch": {
+    "any": {"catch_above_cp": 0, "catch_above_iv": 0, "logic": "or" }
+  },
+  "release": {
+    "any": {"release_below_cp": 0},
+    "Dragonite": {"never_release": true},
+    "Snorlax": {"never_release": true},
+    "Arcanine": {"never_release": true},
+    "Lapras": {"never_release": true},
+    "================ALWAYS============": 0,
+    "Rattata": {"always_release": true},
+    "Pidgey": {"always_release": true},
+    "Caterpie": {"always_release": true},
+    "Weedle": {"always_release": true},
+    "Metapod": {"always_release": true},
+    "Kakuna": {"always_release": true},
+    "Spearow": {"always_release": true},
+    "Ekans": {"always_release": true},
+    "Zubat": {"always_release": true},
+    "Paras": {"always_release": true},
+    "Pidgeot": {"always_release": true},
+    "Goldeen": {"always_release": true},
+    "Diglett": {"always_release": true},
+    "Magikarp": {"keep_best_iv":1}
+  },
+  "vips" : {
+    "any": {"catch_above_cp": 1000, "catch_above_iv": 0.9, "logic": "or" },
+    "Lapras": {},
+    "Moltres": {},
+    "Zapdos": {},
+    "Articuno": {},
+    "Mewtwo": {},
+    "Mew": {},
+    "Dragonite": {},
+    "Snorlax": {},
+    "Arcanine": {},
+    "Lapras": {},
+    "Butterfree": {},
+    "Beedrill": {},
+    "Dewgong": {},
+    "Muk": {}
+  }
+}
