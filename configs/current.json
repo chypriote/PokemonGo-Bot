@@ -164,10 +164,26 @@
     "any": {"catch_above_cp": 0, "catch_above_iv": 0, "logic": "or" }
   },
   "release": {
-    "any": {"release_below_cp": 900, "release_below_iv": 0.8, "keep_best_cp":1, "keep_best_iv":1, "logic": "and"},
+    "any": {"release_below_cp": 0},
     "Dragonite": {"never_release": true},
     "Snorlax": {"never_release": true},
-    "Vaporeon": {"never_release": true}
+    "Arcanine": {"never_release": true},
+    "Lapras": {"never_release": true},
+    "================ALWAYS============": 0,
+    "Rattata": {"always_release": true},
+    "Pidgey": {"always_release": true},
+    "Caterpie": {"always_release": true},
+    "Weedle": {"always_release": true},
+    "Metapod": {"always_release": true},
+    "Kakuna": {"always_release": true},
+    "Spearow": {"always_release": true},
+    "Ekans": {"always_release": true},
+    "Zubat": {"always_release": true},
+    "Paras": {"always_release": true},
+    "Pidgeot": {"always_release": true},
+    "Goldeen": {"always_release": true},
+    "Diglett": {"always_release": true},
+    "Magikarp": {"keep_best_iv":1}
   },
   "vips" : {
     "any": {"catch_above_cp": 1200, "catch_above_iv": 0.9, "logic": "or" },
