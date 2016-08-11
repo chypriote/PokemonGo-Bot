@@ -61,3 +61,5 @@
  * JaapMoolenaar
  * eevee-github
  * g0vanish
+ * cmezh
+ * Nivong
