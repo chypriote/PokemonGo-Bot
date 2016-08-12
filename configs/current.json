@@ -2,10 +2,20 @@
     "auth_service": "ptc",
     "location": "40.76976805976344,-73.979771733284",
     "gmapkey": "AIzaSyB9WyumAiW2xExBFhy18fuY3FtqCBc7VVQ",
-    "libencrypt_location": "",
+    "encrypt_location": "",
     "tasks": [
     {
       "type": "HandleSoftBan"
+    },
+    {
+      "type": "SleepSchedule",
+      "config": {
+        "enabled": false,
+        "time": "22:54",
+        "duration":"7:46",
+        "time_random_offset": "00:24",
+        "duration_random_offset": "00:43"
+      }
     },
     {
       "type": "CollectLevelUpReward"
@@ -14,6 +24,16 @@
       "type": "IncubateEggs",
       "config": {
         "longer_eggs_first": true
+      }
+    },
+    {
+      "type": "UpdateLiveStats",
+      "config": {
+        "enabled": false,
+        "min_interval": 10,
+        "stats": ["uptime", "stardust_earned", "xp_earned", "xp_per_hour", "stops_visited"],
+        "terminal_log": true,
+        "terminal_title": true
       }
     },
     {
@@ -131,17 +151,13 @@
       }
     },
     {
-      "type": "MoveToFort",
+      "type": "FollowCluster",
       "config": {
-        "lure_attraction": false,
-        "lure_max_distance": 2000
+          "radius": 50,
+          "lured": true
       }
-    },
-    {
-      "type": "FollowSpiral"
     }
   ],
-  "map_object_cache_time": 5,
   "forts": {
     "avoid_circles": true,
     "max_circle_size": 50
@@ -164,7 +180,7 @@
     "any": {"catch_above_cp": 0, "catch_above_iv": 0, "logic": "or" }
   },
   "release": {
-    "any": {"release_below_cp": 0},
+    "any": {"release_below_cp": 0, "keep_above_cp": 900},
     "Dragonite": {"never_release": true},
     "Snorlax": {"never_release": true},
     "Arcanine": {"never_release": true},
