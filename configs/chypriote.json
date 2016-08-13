@@ -228,6 +228,7 @@
     "Goldeen": {"always_release": true},
     "Diglett": {"always_release": true},
     "Meowth": {"always_release": true},
+    "Drowzee": {"keep_best_cp": 1, "keep_best_iv": 1, "logic": "and"},
     "Magikarp": {"keep_best_iv":1}
   },
   "vips" : {
