@@ -87,6 +87,7 @@ class TransferPokemon(BaseTask):
             and not release_config.has_key('never_release')
             and not release_config.has_key('always_release')
             and not release_config.has_key('release_below_cp')
+            and not release_config.has_key('keep_above_cp')
             and not release_config.has_key('release_below_iv')):
             return True
 
@@ -104,6 +105,11 @@ class TransferPokemon(BaseTask):
 
         if release_config.get('always_release', False):
             return True
+
+        if release_config.get('keep_above_cp', 0):
+            keep_cp = release_config.get('keep_above_cp', 0)
+            if pokemon.cp >= keep_cp:
+                return False
 
         release_cp = release_config.get('release_below_cp', 0)
         if pokemon.cp < release_cp:

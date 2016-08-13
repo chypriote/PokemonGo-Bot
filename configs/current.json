@@ -55,13 +55,15 @@
       "type": "RecycleItems",
       "config": {
         "item_filter": {
-            "Pokeball":       { "keep" : 50 },
-            "Greatball":      { "keep" : 75 },
+            "Pokeball":       { "keep" : 40 },
+            "Greatball":      { "keep" : 40 },
+            "Ultraball":      { "keep" : 100 },
             "Potion":         { "keep" : 0 },
             "Super Potion":   { "keep" : 0 },
-            "Hyper Potion":   { "keep" : 25 },
+            "Hyper Potion":   { "keep" : 0 },
+            "Max Potion":     { "keep" : 25 },
             "Revive":         { "keep" : 25 },
-            "Razz Berry":     { "keep" : 50 }
+            "Razz Berry":     { "keep" : 40 }
         }
       }
     },
@@ -77,7 +79,7 @@
     {
       "type": "MoveToMapPokemon",
       "config": {
-        "address": "http://pokemap.chypriote.me/",
+        "address": "http://localhost:5000",
         "max_distance": 500,
         "min_time": 60,
         "min_ball": 5,
@@ -157,9 +159,11 @@
       "type": "FollowSpiral"
     }
   ],
+  "map_object_cache_time": 5,
   "forts": {
     "avoid_circles": true,
-    "max_circle_size": 50
+    "max_circle_size": 50,
+    "cache_recent_forts": true
   },
   "websocket_server": false,
   "walk": 8,
@@ -174,12 +178,13 @@
   "evolve_captured": "NONE",
   "catch_randomize_reticle_factor": 1.0,
   "catch_randomize_spin_factor": 1.0,
+  "min_ultraball_to_keep": 5,
   "logging_color": true,
   "catch": {
     "any": {"catch_above_cp": 0, "catch_above_iv": 0, "logic": "or" }
   },
   "release": {
-    "any": {"release_below_cp": 0, "keep_above_cp": 900},
+    "any": {"keep_above_cp": 800, "keep_best_cp": 1, "keep_best_iv": 1, "logic": "and"},
     "Dragonite": {"never_release": true},
     "Snorlax": {"never_release": true},
     "Arcanine": {"never_release": true},

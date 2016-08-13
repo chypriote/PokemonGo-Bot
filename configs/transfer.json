@@ -73,7 +73,7 @@
     "any": {"catch_above_cp": 0, "catch_above_iv": 0, "logic": "or" }
   },
   "release": {
-    "any": {"keep_best_cp":1, "keep_best_iv":1, "logic": "and"},
+    "any": {"keep_above_cp": 800, "keep_best_cp":1, "keep_best_iv":1, "logic": "and"},
     "==========Legendaries==========": 0,
     "Aerodactyl": {"never_release": true},
     "Articuno": {"never_release": true},
