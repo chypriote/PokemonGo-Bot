@@ -3,6 +3,7 @@
     "location": "40.76976805976344,-73.979771733284",
     "gmapkey": "AIzaSyB9WyumAiW2xExBFhy18fuY3FtqCBc7VVQ",
     "encrypt_location": "",
+    "websocket_server": false,
     "tasks": [
     {
       "type": "HandleSoftBan"
@@ -31,7 +32,7 @@
       "config": {
         "enabled": false,
         "min_interval": 10,
-        "stats": ["uptime", "stardust_earned", "xp_earned", "xp_per_hour", "stops_visited"],
+        "stats": ["username", "uptime", "stardust_earned", "xp_earned", "xp_per_hour", "stops_visited"],
         "terminal_log": true,
         "terminal_title": true
       }
@@ -156,7 +157,11 @@
       "type": "MoveToFort"
     },
     {
-      "type": "FollowSpiral"
+      "type": "FollowSpiral",
+      "config": {
+        "diameter": 4,
+        "step_size": 70
+      }
     }
   ],
   "map_object_cache_time": 5,
@@ -165,8 +170,8 @@
     "max_circle_size": 50,
     "cache_recent_forts": true
   },
-  "websocket_server": false,
-  "walk": 8,
+  "walk_max": 8,
+  "walk_min": 5.16,
   "action_wait_min": 1,
   "action_wait_max": 4,
   "debug": false,
@@ -183,8 +188,15 @@
   "catch": {
     "any": {"catch_above_cp": 0, "catch_above_iv": 0, "logic": "or" }
   },
+  "catch_throw_parameters": {
+    "excellent_rate": 0.1,
+    "great_rate": 0.5,
+    "nice_rate": 0.3,
+    "normal_rate": 0.1,
+    "spin_success_rate" : 0.6
+  },
   "release": {
-    "any": {"keep_above_cp": 800, "keep_best_cp": 1, "keep_best_iv": 1, "logic": "and"},
+    "any": {"release_below_cp": 800},
     "Dragonite": {"never_release": true},
     "Snorlax": {"never_release": true},
     "Arcanine": {"never_release": true},
