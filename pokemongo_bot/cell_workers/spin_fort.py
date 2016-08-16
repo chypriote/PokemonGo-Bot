@@ -67,23 +67,16 @@ class SpinFort(BaseTask):
                 experience_awarded = spin_details.get('experience_awarded', 0)
                 items_awarded = self.get_items_awarded_from_fort_spinned(response_dict)
 
-                if experience_awarded:
+                if experience_awarded or items_awarded:
                     self.emit_event(
                         'spun_pokestop',
-                        formatted="Spun pokestop {pokestop}. Experience awarded: {exp}.",
+                        formatted="Spun pokestop {pokestop}. Experience awarded: {exp}. Items awarded: {items}",
                         data={
                             'pokestop': fort_name,
                             'exp': experience_awarded,
                             'items': items_awarded
                         }
                     )
-                for item_id, item_count in tmp_count_items.iteritems():
-                    item_name = self.bot.item_list[str(item_id)]
-                    if items_awarded:
-                        self.emit_event(
-                            'spun_pokestop',
-                            formatted="- " + str(item_count) + "x " + item_name,
-                        )
                 else:
                     self.emit_event(
                         'pokestop_empty',
