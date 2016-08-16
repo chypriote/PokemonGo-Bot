@@ -223,10 +223,11 @@
     "spin_success_rate" : 0.6
   },
   "release": {
-    "any": {"release_below_cp": 800},
+    "any": {"release_below_cp": 800, "release_below_iv": 0, "logic": "or"},
     "Dragonite": {"never_release": true},
     "Snorlax": {"never_release": true},
     "Arcanine": {"never_release": true},
+    "Chansey": {"never_release": true},
     "Lapras": {"never_release": true},
     "================ALWAYS============": 0,
     "Rattata": {"always_release": true},
