@@ -238,7 +238,6 @@
     "Ekans": {"always_release": true},
     "Zubat": {"always_release": true},
     "Paras": {"always_release": true},
-    "Pidgeot": {"always_release": true},
     "Goldeen": {"always_release": true},
     "Diglett": {"always_release": true},
     "Magikarp": {"keep_best_iv":1}
