@@ -69,10 +69,7 @@
       }
     },
     {
-      "type": "CatchVisiblePokemon"
-    },
-    {
-      "type": "CatchLuredPokemon"
+      "type": "CatchPokemon"
     },
     {
       "type": "SpinFort"
@@ -100,23 +97,14 @@
           "Mew": 1000,
           "==========Legends & Not owned==========": 0,
           "Dragonite": 1000,
-          "Butterfree": 1000,
-          "Clefable": 1000,
-          "Wigglytuff": 1000,
           "Vileplume": 1000,
-          "Alakazam": 1000,
-          "Machamp": 1000,
-          "Victreebel": 1000,
-          "Grimer": 1000,
-          "Marowak": 1000,
-          "Kangaskhan": 1000,
           "Ditto": 1000,
           "==========Epic==========": 0,
           "Venusaur": 1000,
           "Charizard": 1000,
           "Blastoise": 1000,
           "Tauros": 600,
-          "//Clefable": 900,
+          "Clefable": 900,
           "==========Very rare==========": 0,
           "Ivysaur": 500,
           "Charmeleon": 500,
@@ -128,14 +116,14 @@
           "//Vileplume": 900,
           "Venomoth": 500,
           "Polywrath": 900,
-          "//Alakazam": 700,
-          "//Victreebel": 900,
+          "Alakazam": 700,
+          "Victreebel": 900,
           "Golem": 900,
           "Slowbro": 900,
           "Gengar": 800,
           "Exeggcutor": 900,
-          "//Marowak": 700,
-          "//Kangaskhan": 800,
+          "Marowak": 700,
+          "Kangaskhan": 800,
           "Pinsir": 800,
           "Gyarados": 900,
           "Lapras": 900,
@@ -157,7 +145,7 @@
           "Golduck": 900,
           "Primeape": 500,
           "Arcanine": 900,
-          "//Machamp": 900,
+          "Machamp": 900,
           "Farfetch'd": 500,
           "Dodrio": 400,
           "Cloyster": 400,
@@ -183,7 +171,7 @@
           "Aerodactyl": 700,
           "Snorlax": 900,
           "Dratini": 800,
-          "//Butterfree": 600,
+          "Butterfree": 600,
           "Beedrill": 600,
           "Dewgong": 500,
           "Muk": 600
@@ -226,14 +214,14 @@
     "any": {"catch_above_cp": 0, "catch_above_iv": 0, "logic": "or" }
   },
   "catch_throw_parameters": {
-    "excellent_rate": 0.1,
-    "great_rate": 0.5,
-    "nice_rate": 0.3,
+    "excellent_rate": 0.3,
+    "great_rate": 0.4,
+    "nice_rate": 0.2,
     "normal_rate": 0.1,
     "spin_success_rate" : 0.6
   },
   "release": {
-    "any": {"release_below_cp": 800, "release_below_iv": 0, "logic": "or"},
+    "any": {"release_below_cp": 800, "release_below_iv": 0.9, "logic": "and"},
     "Dragonite": {"never_release": true},
     "Snorlax": {"never_release": true},
     "Arcanine": {"never_release": true},
@@ -244,7 +232,7 @@
     "Pidgey": {"always_release": true},
     "Caterpie": {"always_release": true},
     "Weedle": {"always_release": true},
-    "Metapod": {"keep_best_iv":1},
+    "Metapod": {"always_release": true},
     "Kakuna": {"always_release": true},
     "Spearow": {"always_release": true},
     "Ekans": {"always_release": true},
