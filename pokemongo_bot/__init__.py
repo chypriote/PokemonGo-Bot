@@ -29,6 +29,7 @@ from pokemongo_bot.event_handlers import LoggingHandler, SocketIoHandler, Colore
 from pokemongo_bot.socketio_server.runner import SocketIoRunner
 from pokemongo_bot.websocket_remote_control import WebsocketRemoteControl
 from pokemongo_bot.base_dir import _base_dir
+from pokemongo_bot.datastore import _init_database, Datastore
 from worker_result import WorkerResult
 from tree_config_builder import ConfigException, MismatchTaskApiVersion, TreeConfigBuilder
 from inventory import init_inventory
@@ -36,7 +37,7 @@ from sys import platform as _platform
 import struct
 
 
-class PokemonGoBot(object):
+class PokemonGoBot(Datastore):
     @property
     def position(self):
         return self.api._position_lat, self.api._position_lng, 0
@@ -55,7 +56,13 @@ class PokemonGoBot(object):
         return self._player
 
     def __init__(self, config):
+
+        # Database connection MUST be setup before migrations will work
+        self.database = _init_database('/data/{}.db'.format(config.username))
+
         self.config = config
+        super(PokemonGoBot, self).__init__()
+
         self.fort_timeouts = dict()
         self.pokemon_list = json.load(
             open(os.path.join(_base_dir, 'data', 'pokemon.json'))
@@ -170,6 +177,22 @@ class PokemonGoBot(object):
                 'wake'
             )
         )
+        
+        # random pause
+        self.event_manager.register_event(
+            'next_random_pause',
+            parameters=(
+                'time',
+                'duration'
+            )
+        )
+        self.event_manager.register_event(
+            'bot_random_pause',
+            parameters=(
+                'time_hms',
+                'resume'
+            )
+        )
 
         # fort stuff
         self.event_manager.register_event(
@@ -276,6 +299,7 @@ class PokemonGoBot(object):
         self.event_manager.register_event(
             'threw_pokeball',
             parameters=(
+                'throw_type',
                 'ball_name',
                 'success_percentage',
                 'count_left'
@@ -316,6 +340,7 @@ class PokemonGoBot(object):
         self.event_manager.register_event('threw_berry_failed', parameters=('status_code',))
         self.event_manager.register_event('vip_pokemon')
         self.event_manager.register_event('gained_candy', parameters=('quantity', 'type'))
+        self.event_manager.register_event('catch_limit')
 
         # level up stuff
         self.event_manager.register_event(
@@ -547,8 +572,11 @@ class PokemonGoBot(object):
             cells = self.find_close_cells(*location)
 
         user_data_cells = os.path.join(_base_dir, 'data', 'cells-%s.json' % self.config.username)
-        with open(user_data_cells, 'w') as outfile:
-            json.dump(cells, outfile)
+        try:
+            with open(user_data_cells, 'w') as outfile:
+                json.dump(cells, outfile)
+        except IOError as e:
+            self.logger.info('[x] Error while opening location file: %s' % e)
 
         user_web_location = os.path.join(
             _base_dir, 'web', 'location-%s.json' % self.config.username
@@ -679,6 +707,9 @@ class PokemonGoBot(object):
             )
             time.sleep(10)
 
+        with self.database as conn:
+            conn.execute('''INSERT INTO login (timestamp, message) VALUES (?, ?)''', (time.time(), 'LOGIN_SUCCESS'))
+
         self.event_manager.emit(
             'login_successful',
             sender=self,
@@ -704,10 +735,10 @@ class PokemonGoBot(object):
         full_path = path + '/'+ file_name
         if not os.path.isfile(full_path):
             self.logger.error(file_name + ' is not found! Please place it in the bots root directory or set encrypt_location in config.')
-            self.logger.info('Platform: '+ _platform + ' Encrypt.so directory: '+ path)
+            self.logger.info('Platform: '+ _platform + ' ' + file_name + ' directory: '+ path)
             sys.exit(1)
         else:
-            self.logger.info('Found '+ file_name +'! Platform: ' + _platform + ' Encrypt.so directory: ' + path)
+            self.logger.info('Found '+ file_name +'! Platform: ' + _platform + ' ' + file_name + ' directory: ' + path)
 
         return full_path
 
@@ -841,8 +872,11 @@ class PokemonGoBot(object):
 
         user_web_inventory = os.path.join(_base_dir, 'web', 'inventory-%s.json' % self.config.username)
 
-        with open(user_web_inventory, 'w') as outfile:
-            json.dump(inventory_dict, outfile)
+        try:
+            with open(user_web_inventory, 'w') as outfile:
+                json.dump(inventory_dict, outfile)
+        except IOError as e:
+            self.logger.info('[x] Error while opening location file: %s' % e)
 
         # get player items stock
         # ----------------------
