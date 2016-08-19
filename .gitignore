@@ -111,6 +111,7 @@ data/last-location*.json
 data/cells-*.json
 data/map-caught-*.json
 data/recent-forts-*.json
+data/caught-*.json
 user_web_catchable
 
 # Multiple config
@@ -134,3 +135,7 @@ pip-selfcheck.json
 
 # Some love for the vim users
 .*.sw*
+
+Scripts
+tcl
+*.dll
