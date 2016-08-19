@@ -139,3 +139,4 @@ pip-selfcheck.json
 Scripts
 tcl
 *.dll
+pgoencrypt*
