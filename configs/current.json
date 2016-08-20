@@ -4,6 +4,7 @@
     "gmapkey": "AIzaSyB9WyumAiW2xExBFhy18fuY3FtqCBc7VVQ",
     "encrypt_location": "",
     "websocket_server": false,
+    "heartbeat_threshold": 10,
     "tasks": [
     {
       "type": "HandleSoftBan"
@@ -18,6 +19,23 @@
         "duration_random_offset": "00:43"
       }
     },
+    {
+    "type": "RandomPause",
+        "config": {
+      "enabled": false,
+      "min_duration": "00:00:10",
+      "max_duration": "00:10:00",
+      "min_interval": "00:10:00",
+      "max_interval": "02:00:00"
+        }
+    },
+      {
+        "type": "CompleteTutorial",
+        "config": {
+          "enabled": false,
+          "nickname": ""
+        }
+      },
     {
       "type": "CollectLevelUpReward"
     },
@@ -38,7 +56,27 @@
       }
     },
     {
-      "type": "TransferPokemon"
+      "type": "UpdateLiveInventory",
+      "config": {
+        "enabled": false,
+        "min_interval": 120,
+        "show_all_multiple_lines": false,
+        "items": ["space_info", "pokeballs", "greatballs", "ultraballs", "razzberries", "luckyegg"]
+      }
+    },
+    {
+      "type": "TransferPokemon",
+      "config": {
+        "transfer_wait_min": 1,
+        "transfer_wait_max": 4
+      }
+    },
+    {
+      "type": "NicknamePokemon",
+      "config": {
+        "enabled": false,
+        "nickname_template": "{iv_pct}_{iv_ads}"
+      }
     },
     {
       "type": "EvolvePokemon",
@@ -55,6 +93,11 @@
     {
       "type": "RecycleItems",
       "config": {
+        "min_empty_space": 15,
+        "max_balls_keep": 180,
+        "max_potions_keep": 30,
+        "max_berries_keep": 40,
+        "max_revives_keep": 50,
         "item_filter": {
             "Pokeball":       { "keep" : 40 },
             "Greatball":      { "keep" : 40 },
@@ -65,21 +108,51 @@
             "Max Potion":     { "keep" : 25 },
             "Revive":         { "keep" : 25 },
             "Razz Berry":     { "keep" : 40 }
+        },
+        "recycle_wait_min": 1,
+        "recycle_wait_max": 4
+      }
+    },
+    {
+      "type": "CatchPokemon",
+      "config": {
+        "catch_visible_pokemon": true,
+        "catch_lured_pokemon": true,
+        "min_ultraball_to_keep": 5,
+        "berry_threshold": 0.35,
+        "vip_berry_threshold": 0.9,
+        "catch_throw_parameters": {
+          "excellent_rate": 0.3,
+          "great_rate": 0.5,
+          "nice_rate": 0.1,
+          "normal_rate": 0.1,
+          "spin_success_rate" : 0.6,
+          "hit_rate": 0.85
+        },
+        "catch_simulation": {
+          "flee_count": 3,
+          "flee_duration": 2,
+          "catch_wait_min": 2,
+          "catch_wait_max": 6,
+          "berry_wait_min": 2,
+          "berry_wait_max": 3,
+          "changeball_wait_min": 2,
+          "changeball_wait_max": 3
         }
       }
     },
     {
-      "type": "CatchPokemon"
-    },
-    {
-      "type": "SpinFort"
+      "type": "SpinFort",
+      "config": {
+        "spin_wait_min": 2,
+        "spin_wait_max": 3
+      }
     },
     {
       "type": "MoveToMapPokemon",
       "config": {
         "address": "http://localhost:5000",
         "max_distance": 500,
-        "min_time": 60,
         "min_ball": 10,
         "prioritize_vips": true,
         "snipe": true,
@@ -88,6 +161,7 @@
         "update_map": false,
         "mode": "priority",
         "map_path": "raw_data",
+        "walker": "StepWalker",
         "catch": {
           "==========Legendaries==========": 0,
           "Moltres": 1000,
@@ -195,29 +269,25 @@
     "max_circle_size": 50,
     "cache_recent_forts": true
   },
+  "pokemon_bag": {
+    "show_at_start": true,
+    "show_count": false,
+    "// ['cp', 'iv_ads', 'iv_pct', 'ivcp', 'ncp', 'level', 'hp', 'moveset', 'dps']": {},
+    "pokemon_info": ["ncp", "cp", "iv_pct"]
+  },
   "walk_max": 8,
   "walk_min": 5.16,
-  "action_wait_min": 1,
-  "action_wait_max": 4,
+  "alt_min": 500,
+  "alt_max": 1000,
   "debug": false,
   "test": false,
   "health_record": false,
   "location_cache": true,
   "distance_unit": "km",
   "reconnecting_timeout": 15,
-  "catch_randomize_reticle_factor": 1.0,
-  "catch_randomize_spin_factor": 1.0,
-  "min_ultraball_to_keep": 5,
   "logging_color": true,
   "catch": {
     "any": {"catch_above_cp": 0, "catch_above_iv": 0, "logic": "or" }
-  },
-  "catch_throw_parameters": {
-    "excellent_rate": 0.3,
-    "great_rate": 0.4,
-    "nice_rate": 0.2,
-    "normal_rate": 0.1,
-    "spin_success_rate" : 0.6
   },
   "release": {
     "any": {"release_below_cp": 800, "release_below_iv": 0.9, "logic": "and"},
@@ -242,7 +312,7 @@
     "Magikarp": {"keep_best_iv":1}
   },
   "vips" : {
-    "any": {"catch_above_cp": 1200, "catch_above_iv": 0.9, "logic": "or" },
+    "any": {"catch_above_ncp": 0, "catch_above_cp": 1200, "catch_above_iv": 0.9, "logic": "and" },
     "Lapras": {},
     "Moltres": {},
     "Zapdos": {},
@@ -250,6 +320,8 @@
     "Mewtwo": {},
     "Dragonite": {},
     "Snorlax": {},
+    "Lapras": {},
+    "Arcanine": {},
     "Mew": {}
   }
 }
