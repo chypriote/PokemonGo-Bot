@@ -32,6 +32,8 @@ import logging
 import os
 import ssl
 import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 import time
 import signal
 import string
@@ -74,7 +76,7 @@ def main():
 
     def get_commit_hash():
         try:
-            hash = subprocess.check_output(['git', 'rev-parse', 'HEAD'], stderr=subprocess.STDOUT)[:-1] 
+            hash = subprocess.check_output(['git', 'rev-parse', 'HEAD'], stderr=subprocess.STDOUT)[:-1]
 
             return hash if all(c in string.hexdigits for c in hash) else "not found"
         except:
@@ -217,6 +219,9 @@ def report_summary(bot):
                         metrics.num_evolutions(), metrics.num_new_mons()))
     logger.info('Threw {} pokeball{}'.format(metrics.num_throws(), '' if metrics.num_throws() == 1 else 's'))
     logger.info('Earned {} Stardust'.format(metrics.earned_dust()))
+    logger.info('Hatched eggs {}'.format(metrics.hatched_eggs(0)))
+    if (metrics.next_hatching_km(0)):
+        logger.info('Next egg hatches in {:.2f} km'.format(metrics.next_hatching_km(0)))
     logger.info('')
     if metrics.highest_cp is not None:
         logger.info('Highest CP Pokemon: {}'.format(metrics.highest_cp['desc']))
@@ -486,6 +491,14 @@ def init_config():
     add_config(
         parser,
         load,
+        long_flag="--pokemon_bag.show_candies",
+        help="Shows the amount of candies for each pokemon",
+        type=bool,
+        default=False
+    )
+    add_config(
+        parser,
+        load,
         long_flag="--pokemon_bag.pokemon_info",
         help="List with the info to show for each pokemon",
         type=bool,
@@ -507,6 +520,48 @@ def init_config():
         type=float,
         default=1000
     )
+    add_config(
+        parser,
+        load,
+        long_flag="--replicate_gps_xy_noise",
+        help="Add noise to current position",
+        type=bool,
+        default=False
+    )
+    add_config(
+        parser,
+        load,
+        long_flag="--replicate_gps_z_noise",
+        help="Add noise to current position",
+        type=bool,
+        default=False
+    )
+    add_config(
+        parser,
+        load,
+        long_flag="--gps_xy_noise_range",
+        help="Intensity of gps noise (unit is lat and lng,) high values may cause issues (default=0.000125)",
+        type=float,
+        default=0.000125
+    )
+    add_config(
+        parser,
+        load,
+        long_flag="--gps_z_noise_range",
+        help="Intensity of gps noise (unit is in meter, default=12.5)",
+        type=float,
+        default=12.5
+    )
+    add_config(
+        parser,
+        load,
+        long_flag="--gps_default_altitude",
+        help="Initial altitude (default=8.0)",
+        type=float,
+        default=8.0
+    )
+
+
     # Start to parse other attrs
     config = parser.parse_args()
     if not config.username and 'username' not in load:

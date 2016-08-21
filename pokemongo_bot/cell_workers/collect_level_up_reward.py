@@ -1,4 +1,5 @@
 from pokemongo_bot.base_task import BaseTask
+from pokemongo_bot import inventory
 
 
 class CollectLevelUpReward(BaseTask):
@@ -46,6 +47,7 @@ class CollectLevelUpReward(BaseTask):
                 if 'item_id' in item and str(item['item_id']) in self.bot.item_list:
                     got_item = self.bot.item_list[str(item['item_id'])]
                     count = 'item_count' in item and item['item_count'] or 0
+                    inventory.items().get(item['item_id']).add(count)
 
                     self.emit_event(
                         'level_up_reward',

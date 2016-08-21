@@ -35,7 +35,8 @@
       {
         "type": "IncubateEggs",
         "config": {
-          "longer_eggs_first": true
+          "longer_eggs_first": true,
+          "min_interval": 120
         }
       },
       {
@@ -54,12 +55,13 @@
           "enabled": false,
           "min_interval": 120,
           "show_all_multiple_lines": false,
-          "items": ["space_info", "pokeballs", "greatballs", "ultraballs", "razzberries", "luckyegg"]
+          "items": ["pokemon_bag", "space_info", "pokeballs", "greatballs", "ultraballs", "razzberries", "luckyegg"]
         }
       },
       {
         "type": "TransferPokemon",
         "config": {
+          "min_free_slot": 5,
           "transfer_wait_min": 1,
           "transfer_wait_max": 4
         }
@@ -155,6 +157,8 @@
       "show_at_start": true,
       "// if 'show_count' is true, it will show the amount of each pokemon (minimum 1)": {},
       "show_count": false,
+      "// if 'show_candies' is true, it will show the amount of candies for each pokemon": {},
+      "show_candies": false,
       "// 'pokemon_info' parameter define which info to show for each pokemon": {},
       "// the available options are": {},
       "// ['cp', 'iv_ads', 'iv_pct', 'ivcp', 'ncp', 'level', 'hp', 'moveset', 'dps']": {},

@@ -112,6 +112,8 @@ class PokemonCatchWorker(Datastore, BaseTask):
             if inventory.items().get(ITEM_GREATBALL).count < 1:
                 if inventory.items().get(ITEM_ULTRABALL).count < 1:
                     return WorkerResult.SUCCESS
+                elif (not is_vip) and inventory.items().get(ITEM_ULTRABALL).count <= self.min_ultraball_to_keep:
+                    return WorkerResult.SUCCESS
 
         # log encounter
         self.emit_event(
@@ -211,15 +213,15 @@ class PokemonCatchWorker(Datastore, BaseTask):
         if pokemon_config.get('always_catch', False):
             return True
 
-        catch_ncp = pokemon_config.get('catch_above_ncp', 0)
+        catch_ncp = pokemon_config.get('catch_above_ncp', 0.8)
         if pokemon.cp_percent > catch_ncp:
             catch_results['ncp'] = True
 
-        catch_cp = pokemon_config.get('catch_above_cp', 0)
+        catch_cp = pokemon_config.get('catch_above_cp', 1200)
         if pokemon.cp > catch_cp:
             catch_results['cp'] = True
 
-        catch_iv = pokemon_config.get('catch_above_iv', 0)
+        catch_iv = pokemon_config.get('catch_above_iv', 0.8)
         if pokemon.iv > catch_iv:
             catch_results['iv'] = True
 
@@ -288,7 +290,7 @@ class PokemonCatchWorker(Datastore, BaseTask):
                 with self.bot.database as conn:
                     c = conn.cursor()
                     c.execute("SELECT COUNT(name) FROM sqlite_master WHERE type='table' AND name='softban_log'")
-                result = c.fetchone()        
+                result = c.fetchone()
 
                 while True:
                     if result[0] == 1:
@@ -338,6 +340,7 @@ class PokemonCatchWorker(Datastore, BaseTask):
             if self.min_ultraball_to_keep >= 0 and self.min_ultraball_to_keep < min_ultraball_to_keep:
                 min_ultraball_to_keep = self.min_ultraball_to_keep
 
+        used_berry = False
         while True:
 
             # find lowest available ball
@@ -365,9 +368,8 @@ class PokemonCatchWorker(Datastore, BaseTask):
             berries_to_spare = berry_count > 0 if is_vip else berry_count > num_next_balls + 30
 
             # use a berry if we are under our ideal rate and have berries to spare
-            used_berry = False
             changed_ball = False
-            if catch_rate_by_ball[current_ball] < ideal_catch_rate_before_throw and berries_to_spare:
+            if catch_rate_by_ball[current_ball] < ideal_catch_rate_before_throw and berries_to_spare and not used_berry:
                 new_catch_rate_by_ball = self._use_berry(berry_id, berry_count, encounter_id, catch_rate_by_ball, current_ball)
                 if new_catch_rate_by_ball != catch_rate_by_ball:
                     catch_rate_by_ball = new_catch_rate_by_ball
@@ -449,6 +451,7 @@ class PokemonCatchWorker(Datastore, BaseTask):
                     formatted='{pokemon} capture failed.. trying again!',
                     data={'pokemon': pokemon.name}
                 )
+                used_berry = False
 
                 # sleep according to flee_count and flee_duration config settings
                 # randomly chooses a number of times to 'show' wobble animation between 1 and flee_count
@@ -501,7 +504,7 @@ class PokemonCatchWorker(Datastore, BaseTask):
                     with self.bot.database as conn:
                         c = conn.cursor()
                         c.execute("SELECT COUNT(name) FROM sqlite_master WHERE type='table' AND name='catch_log'")
-                    result = c.fetchone()        
+                    result = c.fetchone()
 
                     while True:
                         if result[0] == 1:
